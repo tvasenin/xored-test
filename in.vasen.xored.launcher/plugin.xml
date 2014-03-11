@@ -5,8 +5,9 @@
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
             delegate="in.vasen.xored.launching.CompositeLaunchConfigurationDelegate"
-            id="in.vasen.xored.launcher.launchConfigurationTypeComposite"
-            name="Composite launch configuration type">
+            id="in.vasen.xored.launcher.launchComposite"
+            modes="run,debug"
+            name="Composite launch">
       </launchConfigurationType>
    </extension>
 
