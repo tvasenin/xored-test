@@ -4,8 +4,8 @@
    <extension
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
-            delegate="in.vasen.xored.launching.CompositeLaunchConfigurationDelegate"
-            id="in.vasen.xored.launcher.launchComposite"
+            delegate="in.vasen.xored.launch.CompositeLaunchConfigurationDelegate"
+            id="in.vasen.xored.launch.launchComposite"
             modes="run,debug"
             name="Composite launch">
       </launchConfigurationType>
@@ -13,9 +13,9 @@
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
       <launchConfigurationTypeImage
-            configTypeID="in.vasen.xored.launcher.launchComposite"
+            configTypeID="in.vasen.xored.launch.launchComposite"
             icon="icons/composite.gif"
-            id="in.vasen.xored.launcher.launchCompositeImage">
+            id="in.vasen.xored.launch.launchCompositeImage">
       </launchConfigurationTypeImage>
    </extension>
 

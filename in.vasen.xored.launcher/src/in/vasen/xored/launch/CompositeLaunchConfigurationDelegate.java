@@ -1,4 +1,4 @@
-package in.vasen.xored.launching;
+package in.vasen.xored.launch;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
