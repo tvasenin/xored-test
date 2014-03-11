@@ -18,5 +18,12 @@
             id="in.vasen.xored.launch.launchCompositeImage">
       </launchConfigurationTypeImage>
    </extension>
+   <extension
+         point="org.eclipse.debug.core.launchDelegates">
+      <launchDelegate
+            delegate="in.vasen.xored.launch.CompositeLaunchConfigurationDelegate"
+            id="in.vasen.xored.launch.launchCompositeDelegate">
+      </launchDelegate>
+   </extension>
 
 </plugin>
