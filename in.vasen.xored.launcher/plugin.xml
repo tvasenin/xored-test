@@ -10,5 +10,13 @@
             name="Composite launch">
       </launchConfigurationType>
    </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="in.vasen.xored.launcher.launchComposite"
+            icon="icons/composite.gif"
+            id="in.vasen.xored.launcher.launchCompositeImage">
+      </launchConfigurationTypeImage>
+   </extension>
 
 </plugin>
