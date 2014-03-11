@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Composite Launcher
+Bundle-SymbolicName: in.vasen.xored.launcher
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: NeXT, Inc.
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
