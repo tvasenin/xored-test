@@ -25,5 +25,13 @@
             id="in.vasen.xored.launch.launchCompositeDelegate">
       </launchDelegate>
    </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="in.vasen.xored.launch.ui.CompositeLaunchConfigurationTabGroup"
+            id="in.vasen.xored.launch.launchCompositeTabGroup"
+            type="in.vasen.xored.launch.launchComposite">
+      </launchConfigurationTabGroup>
+   </extension>
 
 </plugin>
