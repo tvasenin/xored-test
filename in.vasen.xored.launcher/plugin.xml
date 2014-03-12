@@ -29,7 +29,7 @@
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
             class="in.vasen.xored.launch.ui.CompositeLaunchConfigurationTabGroup"
-            id="in.vasen.xored.launch.launchCompositeTabGroup"
+            id="in.vasen.xored.launch.ui.launchCompositeTabGroup"
             type="in.vasen.xored.launch.launchComposite">
       </launchConfigurationTabGroup>
    </extension>
