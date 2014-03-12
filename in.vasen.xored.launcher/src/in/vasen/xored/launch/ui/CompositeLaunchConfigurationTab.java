@@ -1,7 +1,6 @@
 package in.vasen.xored.launch.ui;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -31,7 +30,7 @@ import org.eclipse.ui.dialogs.PatternFilter;
 public class CompositeLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
 
 	private TableViewer tableViewer;
-	private List<String> items = new ArrayList<String>();
+	private ArrayList<String> items = new ArrayList<String>();
 	private String mode;
 	private LaunchConfigurationFilteredTree tree;
 	
@@ -146,7 +145,8 @@ public class CompositeLaunchConfigurationTab extends AbstractLaunchConfiguration
 	@SuppressWarnings("unchecked")
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		try {
-			items = (ArrayList<String>) configuration.getAttribute("items",  items);
+			ArrayList<String> itemConfig = (ArrayList<String>) configuration.getAttribute("items",  items);
+			items = (ArrayList<String>) itemConfig.clone();
 		} catch (CoreException e) {
 			// nothing
 		}
@@ -155,7 +155,9 @@ public class CompositeLaunchConfigurationTab extends AbstractLaunchConfiguration
 
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-		configuration.setAttribute("items", items);
+		@SuppressWarnings("unchecked")
+		ArrayList<String> itemConfig = (ArrayList<String>) items.clone();
+		configuration.setAttribute("items", itemConfig);
 	}
 
 	@Override
