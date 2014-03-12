@@ -33,14 +33,5 @@
             type="in.vasen.xored.launch.launchComposite">
       </launchConfigurationTabGroup>
    </extension>
-   <extension
-         point="org.eclipse.debug.ui.launchConfigurationTabs">
-      <tab
-            class="in.vasen.xored.launch.ui.CompositeLaunchConfigurationTab"
-            group="in.vasen.xored.launch.ui.launchCompositeTabGroup"
-            id="in.vasen.xored.launch.ui.tabTaskGroup"
-            name="in.vasen.xored.launch.ui.tabTaskGroup">
-      </tab>
-   </extension>
 
 </plugin>

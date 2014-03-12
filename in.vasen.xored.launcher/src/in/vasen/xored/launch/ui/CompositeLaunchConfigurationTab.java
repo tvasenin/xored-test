@@ -27,7 +27,12 @@ public class CompositeLaunchConfigurationTab extends
 
 	private TableViewer tableViewer;
 	private List<String> items = new ArrayList<String>();
+	private String mode;
 	
+	public CompositeLaunchConfigurationTab(String mode) {
+		this.mode = mode;
+	}
+
 	@Override
 	public void createControl(Composite parent) {
 		Composite comp = new Composite(parent, SWT.NONE);

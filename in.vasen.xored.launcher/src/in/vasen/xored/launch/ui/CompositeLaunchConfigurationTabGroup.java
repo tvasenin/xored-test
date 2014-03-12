@@ -14,8 +14,8 @@ public class CompositeLaunchConfigurationTabGroup extends
 
 	@Override
 	public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
-		// TODO Auto-generated method stub
 		ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[] {
+				new CompositeLaunchConfigurationTab(mode),
 				new CommonTab()
 		};
 		setTabs(tabs);
