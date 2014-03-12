@@ -10,7 +10,6 @@ import org.eclipse.debug.internal.ui.DebugUIPlugin;
 import org.eclipse.debug.internal.ui.launchConfigurations.LaunchConfigurationFilteredTree;
 import org.eclipse.debug.internal.ui.launchConfigurations.LaunchGroupFilter;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
-import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.eclipse.debug.ui.ILaunchGroup;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -29,8 +28,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.dialogs.PatternFilter;
 
 @SuppressWarnings("restriction")
-public class CompositeLaunchConfigurationTab extends
-		AbstractLaunchConfigurationTab implements ILaunchConfigurationTab {
+public class CompositeLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
 
 	private TableViewer tableViewer;
 	private List<String> items = new ArrayList<String>();
@@ -141,8 +139,7 @@ public class CompositeLaunchConfigurationTab extends
 	
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-		items.clear();
-		configuration.setAttribute("items", items);
+		// nothing, empty config is the default one
 	}
 
 	@Override
