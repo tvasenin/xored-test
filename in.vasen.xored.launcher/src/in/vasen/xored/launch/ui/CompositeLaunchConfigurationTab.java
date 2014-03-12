@@ -6,8 +6,11 @@ import java.util.List;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.debug.internal.ui.DebugUIPlugin;
+import org.eclipse.debug.internal.ui.launchConfigurations.LaunchConfigurationFilteredTree;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
+import org.eclipse.debug.ui.ILaunchGroup;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -21,13 +24,16 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.ui.dialogs.PatternFilter;
 
+@SuppressWarnings("restriction")
 public class CompositeLaunchConfigurationTab extends
 		AbstractLaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	private TableViewer tableViewer;
 	private List<String> items = new ArrayList<String>();
 	private String mode;
+	private LaunchConfigurationFilteredTree tree;
 	
 	public CompositeLaunchConfigurationTab(String mode) {
 		this.mode = mode;
@@ -36,7 +42,7 @@ public class CompositeLaunchConfigurationTab extends
 	@Override
 	public void createControl(Composite parent) {
 		Composite comp = new Composite(parent, SWT.NONE);
-		comp.setLayout(new GridLayout(2, false));
+		comp.setLayout(new GridLayout(3, false));
 
 		tableViewer = new TableViewer(comp, SWT.SINGLE | SWT.BORDER);
 		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
@@ -59,6 +65,11 @@ public class CompositeLaunchConfigurationTab extends
 		Composite buttons = new Composite(comp, SWT.None);
 		buttons.setLayout(new GridLayout());
 
+		ILaunchGroup launchGroup = getLaunchGroup(this.mode);
+		tree = new LaunchConfigurationFilteredTree(comp, SWT.SINGLE | SWT.BORDER, new PatternFilter(), launchGroup, null);
+		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		tree.createViewControl();
+		
 		Button addButton = new Button(buttons, SWT.PUSH);
 		addButton.setText("Add...");
 		addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -66,9 +77,13 @@ public class CompositeLaunchConfigurationTab extends
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				items.add("qqq");
-				tableViewer.refresh(true);
-				updateLaunchConfigurationDialog();
+				StructuredSelection sel = (StructuredSelection) tree.getViewer().getSelection();
+				Object item = sel.getFirstElement();
+				if (item instanceof ILaunchConfiguration) {
+					items.add(((ILaunchConfiguration) item).getName());
+					tableViewer.refresh(true);
+					updateLaunchConfigurationDialog();
+				}
 			}
 
 			@Override
@@ -102,11 +117,19 @@ public class CompositeLaunchConfigurationTab extends
 		setControl(comp);
 	}
 
+	private ILaunchGroup getLaunchGroup(String mode) {
+		ILaunchGroup[] lGroups = DebugUIPlugin.getDefault().getLaunchConfigurationManager().getLaunchGroups();
+		for (ILaunchGroup lGroup : lGroups) {
+			if (lGroup.getMode().equals(mode)) {
+				return lGroup;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
 		items.clear();
-		items.add("123");
-		items.add("456");
 		configuration.setAttribute("items", items);
 	}
 
