@@ -10,9 +10,12 @@ import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -54,10 +57,42 @@ public class CompositeLaunchConfigurationTab extends
 		Button addButton = new Button(buttons, SWT.PUSH);
 		addButton.setText("Add...");
 		addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		addButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				items.add("qqq");
+				tableViewer.refresh(true);
+				updateLaunchConfigurationDialog();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// nothing
+			}
+		
+		});
 		
 		Button removeButton = new Button(buttons, SWT.PUSH);
 		removeButton.setText("Remove");
 		removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		removeButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Object sel = ((StructuredSelection) tableViewer.getSelection()).getFirstElement();
+				if (sel != null) {
+					items.remove(sel);
+					tableViewer.refresh(true);
+					updateLaunchConfigurationDialog();
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// nothing
+			}
+		});
 				
 		setControl(comp);
 	}
