@@ -8,6 +8,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.internal.ui.DebugUIPlugin;
 import org.eclipse.debug.internal.ui.launchConfigurations.LaunchConfigurationFilteredTree;
+import org.eclipse.debug.internal.ui.launchConfigurations.LaunchGroupFilter;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.eclipse.debug.ui.ILaunchGroup;
@@ -16,6 +17,7 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -69,6 +71,7 @@ public class CompositeLaunchConfigurationTab extends
 		tree = new LaunchConfigurationFilteredTree(comp, SWT.SINGLE | SWT.BORDER, new PatternFilter(), launchGroup, null);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		tree.createViewControl();
+		fixFilters(tree);
 		
 		Button addButton = new Button(buttons, SWT.PUSH);
 		addButton.setText("Add...");
@@ -117,6 +120,15 @@ public class CompositeLaunchConfigurationTab extends
 		setControl(comp);
 	}
 
+	private void fixFilters(LaunchConfigurationFilteredTree tree) {
+		ViewerFilter[] filters = tree.getViewer().getFilters();
+		for (ViewerFilter filter : filters) {
+			if (filter instanceof LaunchGroupFilter) {
+				tree.getViewer().removeFilter(filter);
+			}
+		}
+	}
+	
 	private ILaunchGroup getLaunchGroup(String mode) {
 		ILaunchGroup[] lGroups = DebugUIPlugin.getDefault().getLaunchConfigurationManager().getLaunchGroups();
 		for (ILaunchGroup lGroup : lGroups) {
