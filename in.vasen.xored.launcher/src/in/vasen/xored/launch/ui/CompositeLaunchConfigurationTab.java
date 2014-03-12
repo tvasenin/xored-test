@@ -1,10 +1,17 @@
 package in.vasen.xored.launch.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -16,13 +23,27 @@ public class CompositeLaunchConfigurationTab extends
 		AbstractLaunchConfigurationTab implements ILaunchConfigurationTab {
 
 	private TableViewer tableViewer;
+	private List<String> items = new ArrayList<String>();
 	
 	@Override
 	public void createControl(Composite parent) {
 		Composite comp = new Composite(parent, SWT.NONE);
 		comp.setLayout(new GridLayout(2, false));
 
-		tableViewer = new TableViewer(comp, SWT.SINGLE);
+		tableViewer = new TableViewer(comp, SWT.SINGLE | SWT.BORDER);
+		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
+		
+		TableViewerColumn colItems = new TableViewerColumn(tableViewer, SWT.NONE);
+		colItems.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				return element.toString();
+			}	
+		});
+		colItems.getColumn().setWidth(200);
+		colItems.getColumn().setText("Launch config items");
+	
+		
 		Table table = tableViewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -43,20 +64,26 @@ public class CompositeLaunchConfigurationTab extends
 
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-		// TODO Auto-generated method stub
-
+		items.clear();
+		items.add("123");
+		items.add("456");
+		configuration.setAttribute("items", items);
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void initializeFrom(ILaunchConfiguration configuration) {
-		// TODO Auto-generated method stub
-
+		try {
+			items = (ArrayList<String>) configuration.getAttribute("items",  items);
+		} catch (CoreException e) {
+			// nothing
+		}
+		tableViewer.setInput(items);
 	}
 
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-		// TODO Auto-generated method stub
-
+		configuration.setAttribute("items", items);
 	}
 
 	@Override
