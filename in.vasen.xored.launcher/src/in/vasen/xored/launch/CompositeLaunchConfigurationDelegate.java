@@ -12,15 +12,19 @@ import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 public class CompositeLaunchConfigurationDelegate implements
 		ILaunchConfigurationDelegate {
 
+	static int totalWork = 256;
+	
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode,
 			ILaunch launch, IProgressMonitor monitor) throws CoreException {
+		monitor.beginTask("Composite config", totalWork);
 		@SuppressWarnings("unchecked")
 		ArrayList<String> items = (ArrayList<String>) configuration.getAttribute("items", new ArrayList<String>());
 		ArrayList<ILaunchConfiguration> configs = fetchLaunchConfigurations(items, mode);
 		for (ILaunchConfiguration config : configs) {
-//			config.launch(mode, monitor);
+			config.launch(mode, null);
 		}
+		monitor.done();
 	}
 	
 	private ArrayList<ILaunchConfiguration> fetchLaunchConfigurations(ArrayList<String> names, String mode) {
