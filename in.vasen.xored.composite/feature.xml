@@ -5,15 +5,15 @@
       version="1.0.0.qualifier">
 
    <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+      Composite Launch Configuration -- test plugin for Xored
    </description>
 
    <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+      (c) 2014, Timofey Vasenin
    </copyright>
 
    <license url="http://www.example.com/license">
-      [Enter License Description here.]
+      Public Domain
    </license>
 
    <plugin
