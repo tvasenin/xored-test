@@ -12,6 +12,8 @@ import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.debug.ui.ILaunchGroup;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -70,8 +72,9 @@ public class CompositeLaunchConfigurationTab extends AbstractLaunchConfiguration
 		tree.createViewControl();
 		fixFilters(tree);
 		
-		Button addButton = new Button(buttons, SWT.PUSH);
+		final Button addButton = new Button(buttons, SWT.PUSH);
 		addButton.setText("Add...");
+		addButton.setEnabled(false);
 		addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		addButton.addSelectionListener(new SelectionListener() {
 			
@@ -93,8 +96,9 @@ public class CompositeLaunchConfigurationTab extends AbstractLaunchConfiguration
 		
 		});
 		
-		Button removeButton = new Button(buttons, SWT.PUSH);
+		final Button removeButton = new Button(buttons, SWT.PUSH);
 		removeButton.setText("Remove");
+		removeButton.setEnabled(false);
 		removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		removeButton.addSelectionListener(new SelectionListener() {
 			
@@ -114,6 +118,29 @@ public class CompositeLaunchConfigurationTab extends AbstractLaunchConfiguration
 			}
 		});
 				
+		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				boolean isRemoveEnabled = !event.getSelection().isEmpty();
+				removeButton.setEnabled(isRemoveEnabled);
+			}
+		});
+		tree.getViewer().addSelectionChangedListener(new ISelectionChangedListener() {
+			
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				boolean isRemoveEnabled = false;
+				StructuredSelection sel = (StructuredSelection) event.getSelection();
+				if (!sel.isEmpty()) {
+					Object item = sel.getFirstElement();
+					if (item instanceof ILaunchConfiguration) {
+						isRemoveEnabled = true;
+					}
+				}
+				addButton.setEnabled(isRemoveEnabled);
+			}
+		});
 		setControl(comp);
 	}
 
