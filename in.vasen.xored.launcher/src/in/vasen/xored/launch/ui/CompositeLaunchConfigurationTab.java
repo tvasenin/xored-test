@@ -100,9 +100,9 @@ public class CompositeLaunchConfigurationTab extends AbstractLaunchConfiguration
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Object sel = ((StructuredSelection) tableViewer.getSelection()).getFirstElement();
-				if (sel != null) {
-					items.remove(sel);
+				Object item = ((StructuredSelection) tableViewer.getSelection()).getFirstElement();
+				if (item != null) {
+					items.remove(item);
 					tableViewer.refresh(true);
 					updateLaunchConfigurationDialog();
 				}
