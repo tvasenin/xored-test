@@ -24,6 +24,7 @@ public class CompositeLaunchConfigurationDelegate implements
 		for (ILaunchConfiguration config : configs) {
 			config.launch(mode, null);
 		}
+		DebugPlugin.getDefault().getLaunchManager().removeLaunch(launch); // remove composite meta-launch item
 		monitor.done();
 	}
 	
